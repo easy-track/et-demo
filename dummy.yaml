@@ -1,0 +1,17 @@
+version: "3.8"
+
+services:
+  et-dummy-data:
+    image: qobiljon/dummy-acc-data:${DUMMY_DATA_IMG_VER}
+    container_name: et-dummy-data
+    environment:
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      CAMPAIGN_ID: 1
+      PARTICIPANT_ID: 1
+      DATA_SOURCE_ID: 1
+      FROM_TS: "2022-09-04 00:00:00 KST"
+      TILL_TS: "2022-09-06 04:00:00 KST"
