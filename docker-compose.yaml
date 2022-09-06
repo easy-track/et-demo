@@ -1,0 +1,85 @@
+version: "3.8"
+
+services:
+  # runs db
+  postgres:
+    image: postgres:alpine
+    container_name: et-db
+    network_mode: host
+    environment:
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
+
+  # computes hourly amounts of data
+  hourly-stats:
+    image: qobiljon/et-agg-values-svc:${AGG_VALUES_IMG_VER}
+    container_name: et-agg-values
+    network_mode: host
+    environment:
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+
+  # computes aggregate values every three hours
+  aggregate-values:
+    image: qobiljon/et-hourly-amounts-svc:${HOURLY_STATS_IMG_VER}
+    container_name: et-hourly-amounts
+    network_mode: host
+    environment:
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    depends_on:
+      - postgres
+
+  # serves dashboard static data
+  nginx-static:
+    image: nginx:alpine
+    container_name: et-static
+    ports:
+      - "${STATIC_PORT}:80"
+    volumes:
+      - ./static-conf/static:/srv
+      - ./static-conf/nginx.conf:/etc/nginx/conf.d/default.conf
+
+  # dashboard web app (django)
+  dashboard:
+    image: qobiljon/dashboard:${DASHBOARD_IMG_VER}
+    container_name: et-dashboard
+    network_mode: host
+    environment:
+      STATIC_HOST: host.docker.internal
+      STATIC_PORT: ${STATIC_PORT}
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "8000:8000"
+
+  # generates dummy data in easytrack db
+  et-dummy-data:
+    image: qobiljon/dummy-acc-data:${DUMMY_DATA_IMG_VER}
+    container_name: et-dummy-data
+    network_mode: host
+    environment:
+      POSTGRES_HOST: host.docker.internal
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      CAMPAIGN_ID: 1
+      PARTICIPANT_ID: 1
+      DATA_SOURCE_ID: 1
+      FROM_TS: "2022-09-05 09:00:00 +0900"
+      TILL_TS: "2022-09-07 00:00:00 +0900"
