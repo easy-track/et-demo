@@ -67,19 +67,10 @@ services:
     ports:
       - "8000:8000"
 
-  # generates dummy data in easytrack db
-  et-dummy-data:
-    image: qobiljon/dummy-acc-data:${DUMMY_DATA_IMG_VER}
-    container_name: et-dummy-data
+  # synchronizes geoplan and easytrack databases (like ETL)
+  geoplan-sync:
+    image: qobiljon/et_geoplan_db_sync:${GEOPLAN_SYNC_IMG_VER}
+    container_name: et-geoplan-sync
     network_mode: host
-    environment:
-      POSTGRES_HOST: host.docker.internal
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      CAMPAIGN_ID: 1
-      PARTICIPANT_ID: 1
-      DATA_SOURCE_ID: 1
-      FROM_TS: "2022-09-05 09:00:00 +0900"
-      TILL_TS: "2022-09-07 00:00:00 +0900"
+    env_file:
+      - .env
