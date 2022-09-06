@@ -53,7 +53,7 @@ services:
 
   # dashboard web app (django)
   dashboard:
-    image: qobiljon/dashboard:${DASHBOARD_IMG_VER}
+    image: qobiljon/dashboard-geoplan:${DASHBOARD_IMG_VER}
     container_name: et-dashboard
     network_mode: host
     environment:
