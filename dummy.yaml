@@ -4,6 +4,7 @@ services:
   et-dummy-data:
     image: qobiljon/dummy-acc-data:${DUMMY_DATA_IMG_VER}
     container_name: et-dummy-data
+    network_mode: host
     environment:
       POSTGRES_HOST: host.docker.internal
       POSTGRES_PORT: ${POSTGRES_PORT}
@@ -13,5 +14,5 @@ services:
       CAMPAIGN_ID: 1
       PARTICIPANT_ID: 1
       DATA_SOURCE_ID: 1
-      FROM_TS: "2022-09-04 00:00:00 KST"
-      TILL_TS: "2022-09-06 04:00:00 KST"
+      FROM_TS: "2022-09-05 09:00:00 +0900"
+      TILL_TS: "2022-09-07 00:00:00 +0900"

@@ -179,3 +179,4 @@ cython_debug/
 # PostgreSQL running on docker
 postgres_data/
 pg_data/
+pgdata/

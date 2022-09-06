@@ -4,5 +4,6 @@ services:
   geoplan-sync:
     image: qobiljon/et_geoplan_db_sync:${GEOPLAN_SYNC_IMG_VER}
     container_name: et-geoplan-sync
+    network_mode: host
     env_file:
       - .env
