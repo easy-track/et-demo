@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  # computes hourly amounts of data
+  hourly-stats:
+    image: qobiljon/et-agg-values-svc:${AGG_VALUES_IMG_VER}
+    container_name: et-agg-values
+    network_mode: host
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+
+  # computes aggregate values every three hours
+  aggregate-values:
+    image: qobiljon/et-hourly-amounts-svc:${HOURLY_STATS_IMG_VER}
+    container_name: et-hourly-amounts
+    network_mode: host
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: ${POSTGRES_PORT}
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
