@@ -1,2 +1,2 @@
-y | docker container prune
-y | docker image prune -a
+docker container prune
+docker image prune -a
