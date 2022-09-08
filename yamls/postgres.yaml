@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  # runs db
+  postgres:
+    image: postgres:alpine
+    container_name: et-db
+    network_mode: host
+    environment:
+      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "${POSTGRES_PORT}:5432"
