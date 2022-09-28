@@ -1,26 +1,26 @@
-version: "3.8"
+version: "3.3"
 
 services:
   # computes hourly amounts of data
   hourly-stats:
-    image: qobiljon/et-agg-values-svc:${AGG_VALUES_IMG_VER}
+    image: qobiljon/et-agg-values-svc:1.0
     container_name: et-agg-values
     network_mode: host
     environment:
       POSTGRES_HOST: localhost
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_DBNAME: easytrack
+      POSTGRES_USER: easytrack
+      POSTGRES_PASSWORD: easytrack
 
   # computes aggregate values every three hours
   aggregate-values:
-    image: qobiljon/et-hourly-amounts-svc:${HOURLY_STATS_IMG_VER}
+    image: qobiljon/et-hourly-amounts-svc:1.0
     container_name: et-hourly-amounts
     network_mode: host
     environment:
       POSTGRES_HOST: localhost
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_DBNAME: easytrack
+      POSTGRES_USER: easytrack
+      POSTGRES_PASSWORD: easytrack

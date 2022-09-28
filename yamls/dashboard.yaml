@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.3"
 
 services:
   # serves dashboard static data
@@ -6,23 +6,23 @@ services:
     image: nginx:alpine
     container_name: et-static
     ports:
-      - "${STATIC_PORT}:80"
+      - "8080:80"
     volumes:
       - ../static-conf/static:/srv
       - ../static-conf/nginx.conf:/etc/nginx/conf.d/default.conf
 
   # dashboard web app (django)
   dashboard:
-    image: qobiljon/dashboard:${DASHBOARD_IMG_VER}
+    image: qobiljon/dashboard:1.2
     container_name: et-dashboard
     network_mode: host
     environment:
       STATIC_HOST: host.docker.internal
-      STATIC_PORT: ${STATIC_PORT}
+      STATIC_PORT: 8080
       POSTGRES_HOST: localhost
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_DBNAME: easytrack
+      POSTGRES_USER: easytrack
+      POSTGRES_PASSWORD: easytrack
     ports:
       - "8000:8000"

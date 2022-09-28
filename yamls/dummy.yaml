@@ -1,16 +1,16 @@
-version: "3.8"
+version: "3.3"
 
 services:
   et-dummy-data:
-    image: qobiljon/dummy-data:${DUMMY_DATA_IMG_VER}
+    image: qobiljon/dummy-data:1.0
     container_name: et-dummy-data
     network_mode: host
     environment:
       POSTGRES_HOST: host.docker.internal
-      POSTGRES_PORT: ${POSTGRES_PORT}
-      POSTGRES_DBNAME: ${POSTGRES_DBNAME}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_PORT: 5432
+      POSTGRES_DBNAME: easytrack
+      POSTGRES_USER: easytrack
+      POSTGRES_PASSWORD: easytrack
       CAMPAIGN_ID: 1
       PARTICIPANT_ID: 1
       DATA_SOURCE_ID: 2
