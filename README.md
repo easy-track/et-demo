@@ -2,11 +2,18 @@
 
 _Requirements: Docker and Docker Compose_
 
+### 0. Launch su shell
+
+```commandline
+sudo su
+```
+
 ### 1. Clone repo and launch the database
 
 ```commandline
 git clone https://github.com/easy-track/et-demo.git
 cd et-demo
+git checkout linux-hardcoded
 ./run-postgres.sh
 ```
 
