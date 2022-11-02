@@ -5,10 +5,15 @@ services:
   postgres:
     image: postgres:alpine
     container_name: et-db
-    network_mode: host
     environment:
       POSTGRES_DBNAME: ${POSTGRES_DBNAME}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    # network_mode: "host"
     ports:
       - "${POSTGRES_PORT}:5432"
+    volumes:
+      - "easytrack-vol:/var/lib/postgresql/data"
+
+volumes:
+  easytrack-vol:
