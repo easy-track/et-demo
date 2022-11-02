@@ -16,7 +16,7 @@ services:
     image: qobiljon/dashboard:${DASHBOARD_IMG_VER}
     container_name: et-dashboard
     environment:
-      SERVERNAMES: localhost 127.0.0.1 0.0.0.0 20.0.0.65 118.217.7.46 etdb.myvnc.com
+      SERVERNAMES: localhost 127.0.0.1 0.0.0.0 20.0.0.65 118.217.7.46 easytrack.ddns.net
       INTERNAL_IPS: 127.0.0.1 localhost 20.0.0.65 118.217.7.46
       STATIC_HOST: 172.17.0.1
       STATIC_PORT: ${STATIC_PORT}
