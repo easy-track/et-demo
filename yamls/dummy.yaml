@@ -16,5 +16,5 @@ services:
       DATA_SOURCE_ID: 1
       DATA_TYPE: "Quantitative"
       DATA_RATE: "1Hz"
-      FROM_TS: "2023-02-01 10:00:00 +0900"
-      TILL_TS: "2023-02-28 16:00:00 +0900"
+      FROM_TS: "2023-02-07 10:00:00"
+      TILL_TS: "2023-02-08 20:00:00"
